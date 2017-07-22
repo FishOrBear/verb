@@ -8,7 +8,8 @@
     "url": "https://github.com/pboyer/verb.git"
   },
   "scripts": {
-    "test": "grunt -v mocha"
+    "test": "grunt -v mocha",
+    "hx2dts": "hx2dts --haxe /src/verb --destination ./types"
   },
   "engine": "node 7.0.0",
   "main": "build/js/verb.js",
@@ -21,9 +22,7 @@
     "spline",
     "mesh"
   ],
-  "dependencies": {
-    "webworker-threads": "0.7.12"
-  },
+  "dependencies": {},
   "devDependencies": {
     "benchmark": "1.0.0",
     "grunt": "0.4.5",
@@ -33,9 +32,13 @@
     "grunt-haxe": "0.1.13",
     "grunt-mocha-test": "0.12.7",
     "grunt-text-replace": "0.4.0",
+    "hx2dts": "^0.1.1",
     "mocha": "2.2.4",
     "should": "6.0.1",
     "tess2": "1.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "optionalDependencies": {
+    "webworker-threads": "^0.7.12"
+  }
 }

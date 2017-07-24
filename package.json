@@ -1,8 +1,10 @@
 {
-  "name": "verb-nurbs",
+  "name": "verb-nurbs-web",
   "version": "2.1.0",
   "author": "pboyer <peter.b.boyer@gmail.com>",
   "description": "A CAD library for the web",
+  "declaration": true,
+  "types": "typing/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/pboyer/verb.git"
@@ -12,7 +14,7 @@
     "hx2dts": "hx2dts --haxe /src/verb --destination ./types",
     "join": "file-merge -i **/*.d.ts -e **/index.d.ts -o ./typing/index.d.ts"
   },
-  "engine": "node 7.0.0",
+  "engine": "node 8.0.0",
   "main": "build/js/verb.js",
   "keywords": [
     "NURBS",

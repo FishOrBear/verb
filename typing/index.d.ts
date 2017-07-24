@@ -58,7 +58,7 @@ export declare module core
         /**
          * The parameters of the individual point
          */
-        constructor(points: any, params: any);
+        constructor(points: Array<Point>, params: Array<number>);
 
     }
 }

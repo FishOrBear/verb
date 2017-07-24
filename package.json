@@ -9,7 +9,8 @@
   },
   "scripts": {
     "test": "grunt -v mocha",
-    "hx2dts": "hx2dts --haxe /src/verb --destination ./types"
+    "hx2dts": "hx2dts --haxe /src/verb --destination ./types",
+    "join": "file-merge -i **/*.d.ts -e **/index.d.ts -o ./typing/index.d.ts"
   },
   "engine": "node 7.0.0",
   "main": "build/js/verb.js",
@@ -25,6 +26,7 @@
   "dependencies": {},
   "devDependencies": {
     "benchmark": "1.0.0",
+    "file-merge": "^1.0.0",
     "grunt": "0.4.5",
     "grunt-benchmark": "0.3.0",
     "grunt-contrib-concat": "0.5.1",

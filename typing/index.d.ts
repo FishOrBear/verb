@@ -5,6 +5,7 @@ export declare module core
      * `Constants` contains a collection of default constants used throughout the library. These can be set to adjust verb'
      * defaults
      */
+    //src/verb/core/Constants.hx
     export class Constants
     {
 
@@ -25,7 +26,7 @@ export declare module core
 
     }
 
-
+    //src/verb/core/Intersections.hx
     export class CurveCurveIntersection
     {
 
@@ -45,6 +46,7 @@ export declare module core
     /**
      * A simple data structure representing a polyline. `PolylineData` is useful, for example, as the result of a curve tessellation
      */
+    //src/verb/core/Data.hx
     export class PolylineData extends Serialization.SerializableBase
     {
 
@@ -61,7 +63,10 @@ export declare module core
         constructor(points: Array<Point>, params: Array<number>);
 
     }
+
 }
+
+//src/verb/core/Serialization.hx
 export declare module core.Serialization
 {
     /**
@@ -109,6 +114,7 @@ export declare module core.Serialization
     }
 
 }
+
 
 export declare module eval
 {

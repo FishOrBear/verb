@@ -1,4 +1,5 @@
-declare module verb.eval {
+declare module eval
+{
 
     /**
      * `Intersect` provides various tools for all kinds of intersection. This includes but not limited to
@@ -11,7 +12,8 @@ declare module verb.eval {
      * Under the hood, most of these algorithms call the recursive bounding box intersection algorith
      * (`Intersect.boundingBoxTrees<T1, T2>`) followed by some kind of minimization
      */
-    export class Intersect {
+    class Intersect
+    {
 
         /**
          * ntersect two NURBS surfaces, yielding a list of curve
@@ -25,7 +27,7 @@ declare module verb.eval {
          * 
          * array of NurbsCurveData object
          */
-        static surfaces(surface0:NurbsSurfaceData, surface1:NurbsSurfaceData, tol:number): Array<NurbsCurveData>;
+        static surfaces(surface0: NurbsSurfaceData, surface1: NurbsSurfaceData, tol: number): Array<NurbsCurveData>;
 
         tess1: any;
 
@@ -43,5 +45,16 @@ declare module verb.eval {
 
     }
 
-}
 
+
+
+    interface IBoundingBoxTree<T>
+    {
+
+        boundingBox(): core.BoundingBox;
+        split(): core.Data.Pair<IBoundingBoxTree<T>, IBoundingBoxTree<T>>;
+        yield(): T;
+        indivisible(tolerance: number): boolean;
+        empty(): boolean;
+    }
+}

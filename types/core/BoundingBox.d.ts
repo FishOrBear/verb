@@ -1,4 +1,6 @@
-declare module verb.core {
+type Vector = Array<number>;
+declare module core
+{
 
     /**
      * `BoundingBox` is an n-dimensional bounding box implementation. It is used by many of verb's intersection algorithms
@@ -6,11 +8,12 @@ declare module verb.core {
      * The first point added to the `BoundingBox` using `BoundingBox.add` will be used to define the dimensionality of th
      * bounding box
      */
-    export class BoundingBox {
+    class BoundingBox
+    {
 
         initialized: boolean;
 
-        dim: integer;
+        dim: number;
 
         /**
          * oundingBox Constructo
@@ -19,14 +22,14 @@ declare module verb.core {
          * 
          * Points to add, if desired.  Otherwise, will not be initialized until add is called
          */
-        constructor(pts?:Array<Point>);
+        constructor(pts?: Array<Data.Point>);
 
-        min: Point;
+        min: Data.Point;
 
         /**
          * The minimum point of the BoundingBox - the coordinates of this point are always <= max
          */
-        max: Point;
+        max: Data.Point;
 
         /**
          * The maximum point of the BoundingBox. The coordinates of this point are always >= min
@@ -40,7 +43,7 @@ declare module verb.core {
          * 
          * This BoundingBox for chainin
          */
-        fromPoint(pt:any): any;
+        fromPoint(pt: any): any;
 
         /**
          * dds a point to the bounding box, expanding the bounding box if the point is outside of it
@@ -54,7 +57,7 @@ declare module verb.core {
          * 
          * This BoundingBox for chainin
          */
-        add(point:Point): BoundingBox;
+        add(point: Data.Point): BoundingBox;
 
     }
 

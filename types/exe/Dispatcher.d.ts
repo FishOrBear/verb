@@ -1,10 +1,12 @@
-declare module verb.exe {
+declare module verb.exe
+{
 
-    export class Dispatcher {
+    export class Dispatcher
+    {
 
-        static THREADS: integer;
+        static THREADS: number;
 
-        static dispatchMethod<T>(classType:Class<any>, methodName:string, args:Array<any>): promhx.Promise<T>;
+        static dispatchMethod<T>(classType: Class<any>, methodName: string, args: Array<any>): promhx.Promise<T>;
 
         def: any;
 

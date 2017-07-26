@@ -1,16 +1,17 @@
-declare module verb.core {
+declare module verb.core
+{
 
-    export class LazyMeshBoundingBoxTree implements IBoundingBoxTree<integer> {
+    export class LazyMeshBoundingBoxTree implements IBoundingBoxTree<number> {
 
         _mesh: MeshData;
 
-        _faceIndices: Array<integer>;
+        _faceIndices: Array<number>;
 
         _boundingBox: BoundingBox;
 
-        constructor(mesh:any, faceIndices?:any);
+        constructor(mesh: any, faceIndices?: any);
 
-        split(): Pair<IBoundingBoxTree<integer>,IBoundingBoxTree<integer>>;
+        split(): Pair<IBoundingBoxTree<number>, IBoundingBoxTree<number>>;
 
         as: any;
 
@@ -18,7 +19,7 @@ declare module verb.core {
 
         yield(): any;
 
-        indivisible(tolerance:number): any;
+        indivisible(tolerance: number): any;
 
         empty(): any;
 

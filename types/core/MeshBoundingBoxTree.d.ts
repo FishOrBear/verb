@@ -1,16 +1,17 @@
-declare module verb.core {
+declare module verb.core
+{
 
-    export class MeshBoundingBoxTree implements IBoundingBoxTree<integer> {
+    export class MeshBoundingBoxTree implements IBoundingBoxTree<number> {
 
-        _children: Pair<IBoundingBoxTree<integer>,IBoundingBoxTree<integer>>;
+        _children: Pair<IBoundingBoxTree<number>, IBoundingBoxTree<number>>;
 
         _boundingBox: BoundingBox;
 
-        _face: integer;
+        _face: number;
 
         _empty: boolean;
 
-        constructor(mesh:MeshData, faceIndices?:Array<integer>);
+        constructor(mesh: MeshData, faceIndices?: Array<number>);
 
     }
 

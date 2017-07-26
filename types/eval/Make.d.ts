@@ -1,4 +1,5 @@
-declare module verb.eval {
+declare module verb.eval
+{
 
     /**
      * `Make` provides algorithms for generating NURBS representations of various special surfaces and curves. One of the ver
@@ -15,7 +16,8 @@ declare module verb.eval {
      * 
      * Many of these algorithms owe their implementation to Piegl & Tiller's "The NURBS Book
      */
-    export class Make {
+    export class Make
+    {
 
         /**
          * enerate a surface by translating a profile curve along a rail curv
@@ -29,7 +31,7 @@ declare module verb.eval {
          * 
          * NurbsSurfaceData objec
          */
-        static rationalTranslationalSurface(profile:NurbsCurveData, rail:NurbsCurveData): NurbsSurfaceData;
+        static rationalTranslationalSurface(profile: NurbsCurveData, rail: NurbsCurveData): NurbsSurfaceData;
 
         pt0: any;
 
@@ -46,9 +48,8 @@ declare module verb.eval {
          * 
          * an array containing 4 elements, first 2 curves in the V direction, then 2 curves in the U directio
          */
-        static surfaceBoundaryCurves(surface:NurbsSurfaceData): Array<NurbsCurveData>;
+        static surfaceBoundaryCurves(surface: NurbsSurfaceData): Array<NurbsCurveData>;
 
-        crvs: any;
 
         c0: any;
 
@@ -58,7 +59,7 @@ declare module verb.eval {
 
         c3: any;
 
-        static surfaceIsocurve(surface:NurbsSurfaceData, u:number, useV?:boolean): NurbsCurveData;
+        static surfaceIsocurve(surface: NurbsSurfaceData, u: number, useV?: boolean): NurbsCurveData;
 
         knots: any;
 
@@ -66,7 +67,7 @@ declare module verb.eval {
 
         knotMults: any;
 
-        reqKnotIndex: integer;
+        reqKnotIndex: number;
 
         /**
          * f the knot already exists in the array, don't make duplicate

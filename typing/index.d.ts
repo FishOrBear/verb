@@ -1,12 +1,12 @@
 type Point = Array<number>;
-export declare module core
+declare module core
 {
     /**
      * `Constants` contains a collection of default constants used throughout the library. These can be set to adjust verb'
      * defaults
      */
     //src/verb/core/Constants.hx
-    export class Constants
+    class Constants
     {
 
         /**
@@ -27,7 +27,7 @@ export declare module core
     }
 
     //src/verb/core/Intersections.hx
-    export class CurveCurveIntersection
+    class CurveCurveIntersection
     {
 
         //where the intersection took place
@@ -47,7 +47,7 @@ export declare module core
      * A simple data structure representing a polyline. `PolylineData` is useful, for example, as the result of a curve tessellation
      */
     //src/verb/core/Data.hx
-    export class PolylineData extends Serialization.SerializableBase
+    class PolylineData extends Serialization.SerializableBase
     {
 
         points: Array<Point>;
@@ -67,7 +67,7 @@ export declare module core
 }
 
 //src/verb/core/Serialization.hx
-export declare module core.Serialization
+declare module core.Serialization
 {
     /**
              * An interface describing a type that can be serialized as
@@ -76,7 +76,7 @@ export declare module core.Serialization
              * object and is strongly typed. For details, se
              * [http://haxe.org/manual/std-serialization.html](http://haxe.org/manual/std-serialization.html) for details
              */
-    export interface ISerializable
+    interface ISerializable
     {
         serialize(): string;
     }
@@ -84,7 +84,7 @@ export declare module core.Serialization
     /**
      * Forms a base class for serializable data type
      */
-    export class SerializableBase
+    class SerializableBase
     {
         serialize(): string;
         serializer: any;
@@ -93,7 +93,7 @@ export declare module core.Serialization
     /**
      * Deserializes strings for types implementing ISerializabl
      */
-    export class Deserializer
+    class Deserializer
     {
 
         /**
@@ -115,8 +115,7 @@ export declare module core.Serialization
 
 }
 
-
-export declare module eval
+declare module eval
 {
     /**
          * `Intersect` provides various tools for all kinds of intersection. This includes but not limited to
@@ -129,7 +128,7 @@ export declare module eval
          * Under the hood, most of these algorithms call the recursive bounding box intersection algorith
          * (`Intersect.boundingBoxTrees<T1, T2>`) followed by some kind of minimization
          */
-    export class Intersect
+    class Intersect
     {
 
         /**

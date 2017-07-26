@@ -1,14 +1,13 @@
-declare module verb.core {
+declare module verb.core
+{
+    class Binomial
+    {
 
-    export class Binomial {
-
-        static get(n:integer, k:integer): number;
-
-        r: number;
-
-        static get_no_memo(n:integer, k:integer): number;
+        static get(n: number, k: number): number;
 
         r: number;
+
+        static get_no_memo(n: number, k: number): number;
 
     }
 

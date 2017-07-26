@@ -1,4 +1,5 @@
-declare module verb.eval {
+declare module verb.eval
+{
 
     /**
      * `Eval` provides all of the core algorithms for evaluating points and derivatives on NURBS curves and surfaces. Most of th
@@ -8,7 +9,8 @@ declare module verb.eval {
      * 
      * Many of these algorithms owe their implementation to Piegl & Tiller's "The NURBS Book
      */
-    export class Eval {
+    export class Eval
+    {
 
         /**
          * ompute the tangent at a point on a NURBS curv
@@ -23,7 +25,7 @@ declare module verb.eval {
          * 
          * a Vector represented by an array of length (dim
          */
-        static rationalCurveTangent(curve:NurbsCurveData, u:number): Array<number>;
+        static rationalCurveTangent(curve: NurbsCurveData, u: number): Array<number>;
 
         derivs: any;
 
@@ -40,7 +42,7 @@ declare module verb.eval {
          * 
          * a Vector represented by an array of length (dim
          */
-        static rationalSurfaceNormal(surface:NurbsSurfaceData, u:number, v:number): Array<number>;
+        static rationalSurfaceNormal(surface: NurbsSurfaceData, u: number, v: number): Array<number>;
 
         derivs: any;
 
@@ -58,7 +60,7 @@ declare module verb.eval {
          * 
          * a point represented by an array of length (dim
          */
-        static rationalSurfaceDerivatives(surface:NurbsSurfaceData, u:number, v:number, numDerivs?:integer): Array<Array<Array<number>>>;
+        static rationalSurfaceDerivatives(surface: NurbsSurfaceData, u: number, v: number, numDerivs?: number): Array<Array<Array<number>>>;
 
         ders: any;
 
@@ -72,9 +74,9 @@ declare module verb.eval {
          * 
          * params*
          * 
-         * integer degree of surface in u directio
+         * number degree of surface in u directio
          * array of nondecreasing knot values in u directio
-         * integer degree of surface in v directio
+         * number degree of surface in v directio
          * array of nondecreasing knot values in v directio
          * 3d array of control points (tensor), top to bottom is increasing u direction, left to right is increasing v direction
          * nd where each control point is an array of length (dim+1
@@ -85,7 +87,7 @@ declare module verb.eval {
          * 
          * a point represented by an array of length (dim
          */
-        static rationalSurfacePoint(surface:NurbsSurfaceData, u:number, v:number): Point;
+        static rationalSurfacePoint(surface: NurbsSurfaceData, u: number, v: number): Point;
 
         /**
          * etermine the derivatives of a NURBS curve at a given paramete
@@ -100,7 +102,7 @@ declare module verb.eval {
          * 
          * a point represented by an array of length (dim
          */
-        static rationalCurveDerivatives(curve:NurbsCurveData, u:number, numDerivs?:integer): Array<Point>;
+        static rationalCurveDerivatives(curve: NurbsCurveData, u: number, numDerivs?: number): Array<Point>;
 
         ders: any;
 
@@ -112,7 +114,7 @@ declare module verb.eval {
          * 
          * params*
          * 
-         * integer degree of curv
+         * number degree of curv
          * array of nondecreasing knot value
          * 2d array of homogeneous control points, where each control point is an array of length (dim+1
          * nd form (wi*pi, wi
@@ -122,7 +124,7 @@ declare module verb.eval {
          * 
          * a point represented by an array of length (dim
          */
-        static rationalCurvePoint(curve:NurbsCurveData, u:number): Point;
+        static rationalCurvePoint(curve: NurbsCurveData, u: number): Point;
 
         /**
          * ompute the derivatives on a non-uniform, non-rational B spline surfac
@@ -138,7 +140,7 @@ declare module verb.eval {
          * 
          * a 2d jagged array representing the derivatives - u derivatives increase by row, v by colum
          */
-        static surfaceDerivatives(surface:NurbsSurfaceData, u:number, v:number, numDerivs:integer): Array<Array<Point>>;
+        static surfaceDerivatives(surface: NurbsSurfaceData, u: number, v: number, numDerivs: number): Array<Array<Point>>;
 
         n: any;
 
@@ -148,8 +150,8 @@ declare module verb.eval {
          * 
          * params*
          * 
-         * integer number of basis functions in u dir - 1 = knotsU.length - degreeU -
-         * integer number of basis functions in v dir - 1 = knotsU.length - degreeU -
+         * number number of basis functions in u dir - 1 = knotsU.length - degreeU -
+         * number number of basis functions in v dir - 1 = knotsU.length - degreeU -
          * NurbsSurfaceData object representing the surfac
          * u parameter at which to evaluate the derivative
          * v parameter at which to evaluate the derivative
@@ -158,7 +160,7 @@ declare module verb.eval {
          * 
          * a 2d jagged array representing the derivatives - u derivatives increase by row, v by colum
          */
-        static surfaceDerivativesGivenNM(n:integer, m:integer, surface:NurbsSurfaceData, u:number, v:number, numDerivs:integer): Array<Array<Point>>;
+        static surfaceDerivativesGivenNM(n: number, m: number, surface: NurbsSurfaceData, u: number, v: number, numDerivs: number): Array<Array<Point>>;
 
         degreeU: any;
 

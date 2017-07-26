@@ -1,6 +1,8 @@
-declare module verb.core {
+declare module verb.core
+{
 
-    export class ArrayExtensions {
+    class ArrayExtensions
+    {
 
         /**
          * ill an array with n copies of null by mutatio
@@ -14,7 +16,7 @@ declare module verb.core {
          * 
          * nothing, just mutates the given arra
          */
-        static alloc<T>(a:Array<T>, n:integer): any;
+        static alloc<T>(a: Array<T>, n: number): any;
 
     }
 

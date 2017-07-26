@@ -1,8 +1,10 @@
-declare module verb.core {
+declare module verb.core
+{
 
-    export class Minimizer {
+    export class Minimizer
+    {
 
-        static uncmin(f:(Vector)=>number, x0:Vector, tol?:number, gradient?:(Vector)=>Vector, maxit?:integer): MinimizationResult;
+        static uncmin(f: (Vector) => number, x0: Vector, tol?: number, gradient?: (Vector) => Vector, maxit?: number): MinimizationResult;
 
         n: any;
 
@@ -14,12 +16,14 @@ declare module verb.core {
 
     }
 
-    module Minimizer {
+    module Minimizer
+    {
 
         /**
          * ine searc
          */
-        export class MinimizationResult {
+        export class MinimizationResult
+        {
 
             solution: Vector;
 
@@ -29,11 +33,11 @@ declare module verb.core {
 
             invHessian: Matrix;
 
-            iterations: integer;
+            iterations: number;
 
             message: string;
 
-            constructor(solution:any, value:any, gradient:any, invHessian:any, iterations:any, message:any);
+            constructor(solution: any, value: any, gradient: any, invHessian: any, iterations: any, message: any);
 
         }
 

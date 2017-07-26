@@ -1,16 +1,17 @@
-declare module verb.core {
+declare module verb.core
+{
 
-    export class LazyPolylineBoundingBoxTree implements IBoundingBoxTree<integer> {
+    export class LazyPolylineBoundingBoxTree implements IBoundingBoxTree<number> {
 
-        _interval: Interval<integer>;
+        _interval: Interval<number>;
 
         _polyline: PolylineData;
 
         _boundingBox: BoundingBox;
 
-        constructor(polyline:any, interval?:any);
+        constructor(polyline: any, interval?: any);
 
-        split(): Pair<IBoundingBoxTree<integer>,IBoundingBoxTree<integer>>;
+        split(): Pair<IBoundingBoxTree<number>, IBoundingBoxTree<number>>;
 
         min: any;
 
@@ -24,7 +25,7 @@ declare module verb.core {
 
         yield(): any;
 
-        indivisible(tolerance:number): any;
+        indivisible(tolerance: number): any;
 
         empty(): any;
 

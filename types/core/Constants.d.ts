@@ -1,10 +1,12 @@
-declare module verb.core {
+declare module core
+{
 
     /**
      * `Constants` contains a collection of default constants used throughout the library. These can be set to adjust verb'
      * defaults
      */
-    export class Constants {
+    class Constants
+    {
 
         /**
          * he default euclidean distance that identifies whether two points are coinciden

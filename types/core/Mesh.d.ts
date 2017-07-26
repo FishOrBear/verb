@@ -1,9 +1,11 @@
-declare module verb.core {
+declare module verb.core
+{
 
     /**
      * `Mesh` provides various convenience methods for working with meshes
      */
-    export class Mesh {
+    export class Mesh
+    {
 
         /**
          * et triangle norma
@@ -18,7 +20,7 @@ declare module verb.core {
          * a normal vector represented by an array of length
          * 
          */
-        static getTriangleNorm(points:Array<Point>, tri:Tri): Point;
+        static getTriangleNorm(points: Array<Point>, tri: Tri): Point;
 
         v0: any;
 
@@ -35,7 +37,7 @@ declare module verb.core {
          * a BoundingBox containing the mes
          * 
          */
-        static makeMeshAabb(mesh:MeshData, faceIndices:Array<integer>): verb.core.BoundingBox;
+        static makeMeshAabb(mesh: MeshData, faceIndices: Array<number>): verb.core.BoundingBox;
 
         bb: any;
 
@@ -53,7 +55,7 @@ declare module verb.core {
          * a point represented by an array of length (dim
          * 
          */
-        static sortTrianglesOnLongestAxis(bb:verb.core.BoundingBox, mesh:MeshData, faceIndices:Array<integer>): Array<integer>;
+        static sortTrianglesOnLongestAxis(bb: verb.core.BoundingBox, mesh: MeshData, faceIndices: Array<number>): Array<number>;
 
         longAxis: any;
 

@@ -1,9 +1,11 @@
-declare module verb.eval {
+declare module verb.eval
+{
 
     /**
      * Divide provides various tools for dividing and splitting NURBS geometry
      */
-    export class Divide {
+    export class Divide
+    {
 
         /**
          * plit a NURBS surface in two at a given paramete
@@ -18,7 +20,7 @@ declare module verb.eval {
          * 
          * A length two array of new surface
          */
-        static surfaceSplit(surface:NurbsSurfaceData, u:number, useV?:boolean): Array<NurbsSurfaceData>;
+        static surfaceSplit(surface: NurbsSurfaceData, u: number, useV?: boolean): Array<NurbsSurfaceData>;
 
         knots_to_insert: any;
 
@@ -45,19 +47,9 @@ declare module verb.eval {
          * 
          * Array* two new curves, defined by degree, knots, and control point
          */
-        static curveSplit(curve:NurbsCurveData, u:number): Array<NurbsCurveData>;
+        static curveSplit(curve: NurbsCurveData, u: number): Array<NurbsCurveData>;
 
         degree: any;
-
-        knots_to_insert: any;
-
-        res: any;
-
-        s: any;
-
-        knots0: any;
-
-        knots1: any;
 
         cpts0: any;
 
@@ -77,7 +69,7 @@ declare module verb.eval {
          * 
          * An array of `CurveLengthSample` object
          */
-        static rationalCurveByEqualArcLength(curve:NurbsCurveData, num:integer): Array<CurveLengthSample>;
+        static rationalCurveByEqualArcLength(curve: NurbsCurveData, num: number): Array<CurveLengthSample>;
 
         tlen: any;
 
@@ -95,11 +87,9 @@ declare module verb.eval {
          * 
          * A sequence of `CurveLengthSample` object
          */
-        static rationalCurveByArcLength(curve:NurbsCurveData, l:number): Array<CurveLengthSample>;
+        static rationalCurveByArcLength(curve: NurbsCurveData, l: number): Array<CurveLengthSample>;
 
         crvs: any;
-
-        inc: any;
 
     }
 

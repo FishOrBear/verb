@@ -1,6 +1,6 @@
-declare module verb.core {
-
-    export class LazyCurveBoundingBoxTree implements IBoundingBoxTree<NurbsCurveData> {
+declare module core
+{
+    class LazyCurveBoundingBoxTree implements IBoundingBoxTree<NurbsCurveData> {
 
         _curve: NurbsCurveData;
 
@@ -8,9 +8,9 @@ declare module verb.core {
 
         _knotTol: number;
 
-        constructor(curve:any, knotTol?:number);
+        constructor(curve: any, knotTol?: number);
 
-        split(): Pair<IBoundingBoxTree<NurbsCurveData>,IBoundingBoxTree<NurbsCurveData>>;
+        split(): Pair<IBoundingBoxTree<NurbsCurveData>, IBoundingBoxTree<NurbsCurveData>>;
 
         min: any;
 
@@ -24,7 +24,7 @@ declare module verb.core {
 
         yield(): any;
 
-        indivisible(tolerance:number): any;
+        indivisible(tolerance: number): any;
 
     }
 

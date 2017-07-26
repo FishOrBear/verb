@@ -1,8 +1,13 @@
-declare module verb.core {
+type Point = Array<number>;
+type UV = any;
+declare module core
+{
 
-    module Intersections {
+    module Intersections
+    {
 
-        export class CurveCurveIntersection {
+        class CurveCurveIntersection
+        {
 
             point0: Point;
 
@@ -24,25 +29,27 @@ declare module verb.core {
             /**
              * he parameter on the second curv
              */
-            constructor(point0:any, point1:any, u0:any, u1:any);
+            constructor(point0: any, point1: any, u0: any, u1: any);
 
         }
 
-        export class CurveSurfaceIntersection {
+        class CurveSurfaceIntersection
+        {
 
             u: number;
 
-            uv: UV;
+            // uv: UV;
 
             curvePoint: Point;
 
             surfacePoint: Point;
 
-            constructor(u:any, uv:any, curvePoint:any, surfacePoint:any);
+            constructor(u: any, uv: any, curvePoint: any, surfacePoint: any);
 
         }
 
-        export class MeshIntersectionPoint {
+        class MeshIntersectionPoint
+        {
 
             uv0: UV;
 
@@ -50,9 +57,9 @@ declare module verb.core {
 
             point: Point;
 
-            faceIndex0: integer;
+            faceIndex0: number;
 
-            faceIndex1: integer;
+            faceIndex1: number;
 
             opp: MeshIntersectionPoint;
 
@@ -63,11 +70,12 @@ declare module verb.core {
 
             visited: boolean;
 
-            constructor(uv0:any, uv1:any, point:any, faceIndex0:any, faceIndex1:any);
+            constructor(uv0: any, uv1: any, point: any, faceIndex0: any, faceIndex1: any);
 
         }
 
-        export class PolylineMeshIntersection {
+        class PolylineMeshIntersection
+        {
 
             point: Point;
 
@@ -75,15 +83,16 @@ declare module verb.core {
 
             uv: UV;
 
-            polylineIndex: integer;
+            polylineIndex: number;
 
-            faceIndex: integer;
+            faceIndex: number;
 
-            constructor(point:any, u:any, uv:any, polylineIndex:any, faceIndex:any);
+            constructor(point: any, u: any, uv: any, polylineIndex: any, faceIndex: any);
 
         }
 
-        export class SurfaceSurfaceIntersectionPoint {
+        class SurfaceSurfaceIntersectionPoint
+        {
 
             uv0: UV;
 
@@ -93,11 +102,12 @@ declare module verb.core {
 
             dist: number;
 
-            constructor(uv0:any, uv1:any, point:any, dist:any);
+            constructor(uv0: any, uv1: any, point: any, dist: any);
 
         }
 
-        export class TriSegmentIntersection {
+        class TriSegmentIntersection
+        {
 
             point: Point;
 
@@ -119,11 +129,12 @@ declare module verb.core {
             /**
              * he parameter along the segmen
              */
-            constructor(point:any, s:any, t:any, r:any);
+            constructor(point: any, s: any, t: any, r: any);
 
         }
 
-        export class CurveTriPoint {
+        class CurveTriPoint
+        {
 
             u: number;
 
@@ -131,11 +142,12 @@ declare module verb.core {
 
             point: Point;
 
-            constructor(u:number, point:Point, uv:UV);
+            constructor(u: number, point: Point, uv: UV);
 
         }
 
-        export class SurfacePoint {
+        class SurfacePoint
+        {
 
             uv: UV;
 
@@ -143,23 +155,24 @@ declare module verb.core {
 
             normal: Point;
 
-            id: integer;
+            id: number;
 
             degen: boolean;
 
-            constructor(point:Point, normal:Point, uv:UV, id?:integer, degen?:boolean);
+            constructor(point: Point, normal: Point, uv: UV, id?: number, degen?: boolean);
 
-            static fromUv(u:any, v:any): any;
+            static fromUv(u: any, v: any): any;
 
         }
 
-        export class CurvePoint {
+        class CurvePoint
+        {
 
             u: number;
 
             pt: Point;
 
-            constructor(u:any, pt:any);
+            constructor(u: any, pt: any);
 
         }
 

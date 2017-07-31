@@ -1,5 +1,241 @@
 export declare module core
 {
+
+
+        /**
+     * `BoundingBox` is an n-dimensional bounding box implementation. It is used by many of verb's intersection algorithms
+     * 
+     * The first point added to the `BoundingBox` using `BoundingBox.add` will be used to define the dimensionality of th
+     * bounding box
+     */
+    class BoundingBox
+    {
+
+        initialized: boolean;
+
+        dim: number;
+
+        /**
+         * oundingBox Constructo
+         * 
+         * params*
+         * 
+         * Points to add, if desired.  Otherwise, will not be initialized until add is called
+         */
+        constructor(pts?: Array<Data.Point>);
+
+        min: Data.Point;
+
+        /**
+         * The minimum point of the BoundingBox - the coordinates of this point are always <= max
+         */
+        max: Data.Point;
+
+        /**
+         * The maximum point of the BoundingBox. The coordinates of this point are always >= min
+         * reate a bounding box initialized with a single elemen
+         * 
+         * params*
+         * 
+         * A array of number
+         * 
+         * returns*
+         * 
+         * This BoundingBox for chainin
+         */
+        fromPoint(pt: any): any;
+
+        /**
+         * dds a point to the bounding box, expanding the bounding box if the point is outside of it
+         * f the bounding box is not initialized, this method has that side effect
+         * 
+         * params*
+         * 
+         * A length-n array of number
+         * 
+         * returns*
+         * 
+         * This BoundingBox for chainin
+         */
+        add(point: Data.Point): BoundingBox;
+
+    }
+
+    module Intersections
+    {
+
+        class CurveCurveIntersection
+        {
+
+            point0: Data. Point;
+
+            /**
+             * here the intersection took plac
+             */
+            point1: Data. Point;
+
+            /**
+             * here the intersection took place on the second curv
+             */
+            u0: number;
+
+            /**
+             * he parameter on the first curv
+             */
+            u1: number;
+
+            /**
+             * he parameter on the second curv
+             */
+            constructor(point0: any, point1: any, u0: any, u1: any);
+
+        }
+
+        class CurveSurfaceIntersection
+        {
+
+            u: number;
+
+            // uv: UV;
+
+            curvePoint:Data. Point;
+
+            surfacePoint: Data.Point;
+
+            constructor(u: any, uv: any, curvePoint: any, surfacePoint: any);
+
+        }
+
+        class MeshIntersectionPoint
+        {
+
+            uv0: Data.UV;
+
+            uv1: Data.UV;
+
+            point: Data.Point;
+
+            faceIndex0: number;
+
+            faceIndex1: number;
+
+            opp: MeshIntersectionPoint;
+
+            /**
+             * ags to navigate a segment structur
+             */
+            adj: MeshIntersectionPoint;
+
+            visited: boolean;
+
+            constructor(uv0: any, uv1: any, point: any, faceIndex0: any, faceIndex1: any);
+
+        }
+
+        class PolylineMeshIntersection
+        {
+
+            point: Data.Point;
+
+            u: number;
+
+            uv: Data.UV;
+
+            polylineIndex: number;
+
+            faceIndex: number;
+
+            constructor(point: any, u: any, uv: any, polylineIndex: any, faceIndex: any);
+
+        }
+
+        class SurfaceSurfaceIntersectionPoint
+        {
+
+            uv0: Data.UV;
+
+            uv1: Data.UV;
+
+            point: Data.Point;
+
+            dist: number;
+
+            constructor(uv0: any, uv1: any, point: any, dist: any);
+
+        }
+
+        class TriSegmentIntersection
+        {
+
+            point: Data.Point;
+
+            /**
+             * here the intersection took plac
+             */
+            s: number;
+
+            /**
+             * he u param where u is the axis from v0 to v
+             */
+            t: number;
+
+            /**
+             * he v param where v is the axis from v0 to v
+             */
+            p: number;
+
+            /**
+             * he parameter along the segmen
+             */
+            constructor(point: any, s: any, t: any, r: any);
+
+        }
+
+        class CurveTriPoint
+        {
+
+            u: number;
+
+            uv: Data.UV;
+
+            point: Data.Point;
+
+            constructor(u: number, point: Data.Point, uv: Data.UV);
+
+        }
+
+        class SurfacePoint
+        {
+
+            uv: Data.UV;
+
+            point: Data.Point;
+
+            normal: Data.Point;
+
+            id: number;
+
+            degen: boolean;
+
+            constructor(point: Data.Point, normal: Data.Point, uv: Data.UV, id?: number, degen?: boolean);
+
+            static fromUv(u: any, v: any): any;
+
+        }
+
+        class CurvePoint
+        {
+
+            u: number;
+
+            pt: Data.Point;
+
+            constructor(u: any, pt: any);
+
+        }
+
+    }
+
     //src/verb/core/Serialization.hx
     module Serialization
     {
@@ -57,8 +293,9 @@ export declare module core
          * 
          * So, in JavaScript, one would write simply `[0,0,0]` to create a Point at the origin
          */
-        interface Point extends Array<number> { }
-        interface Vector extends Array<number> { }
+        type Point = Array<number>;
+        type Vector = Array<number>;
+        type Matrix = Array<Array<number>>
 
         /**
          * Like a `Point`, a `Vector` is simply an array of floating point number
@@ -314,16 +551,16 @@ export declare module core
     {
 
         //where the intersection took place
-        public point0: Data.Point;
+         point0: Data.Point;
 
         //where the intersection took place on the second curve
-        public point1: Data.Point;
+         point1: Data.Point;
 
         //the parameter on the first curve
-        public u0: number;
+         u0: number;
 
         //the parameter on the second curve
-        public u1: number;
+         u1: number;
         constructor(point0, point1, u0, u1);
     }
     /**
@@ -348,9 +585,458 @@ export declare module core
     }
 }
 
-
-declare module eval
+export declare module geom
 {
+    /**
+ * n interface representing a Curv
+ */
+
+    export interface ICurve extends core.Serialization.ISerializable
+    {
+
+        /**
+         * rovide the NURBS representation of the curv
+         * 
+         * returns*
+         * 
+         * A NurbsCurveData object representing the curv
+         */
+
+        asNurbs(): core.Data.NurbsCurveData;
+
+        /**
+         * btain the parametric domain of the curv
+         * 
+         * returns*
+         * 
+         * An Interval object containing the min and max of the domai
+         */
+        domain(): core.Data.Interval<number>;
+
+        /**
+         * valuate a point on the curv
+         * 
+         * params*
+         * 
+         * The parameter on the curv
+         * 
+         * returns*
+         * 
+         * The evaluated poin
+         */
+        point(u: number): core.Data.Point;
+
+        /**
+         * valuate the derivatives at a point on a curv
+         * 
+         * params*
+         * 
+         * The parameter on the curv
+         * The number of derivatives to evaluate on the curv
+         * 
+         * returns*
+         * 
+         * An array of derivative vector
+         */
+
+
+        derivatives(u: number, numDerivs?: number): Array<core.Data.Vector>;
+
+    }
+
+
+    /**
+ * A NURBS curve - this class represents the base class of many of verb.geom's curve types and provides many tools for analysis and evaluation
+ * This object is deliberately constrained to be immutable. The methods to inspect the properties of this class deliberately return copies. `asNurbs` ca
+ * be used to obtain a simplified NurbsCurveData object that can be used with `verb.core` or for serialization purposes
+ * 
+ * Under the hood, this type takes advantage of verb's asynchronous runtime using the _Async methods. Calling one of thes
+ * methods returns a `Promise` instead of the value. This allows you to run the computation in a background thread and obtain the value asynchronously
+ * 
+ * You can find further documentation for using `Promise`'s at [https://github.com/jdonaldson/promhx](https://github.com/jdonaldson/promhx)
+ */
+    export class NurbsCurve extends core.Serialization.SerializableBase implements ICurve
+    {
+
+        /**
+         * onstruct a NurbsCurve by a NurbsCurveData objec
+         * 
+         * params*
+         * 
+         * The data objec
+         * 
+         * returns*
+         * 
+         * A new NurbsCurv
+         */
+
+        constructor(data: core.Data.NurbsCurveData);
+
+        /**
+         * onstruct a NurbsCurve by degree, knots, control points, weight
+         * 
+         * params*
+         * 
+         * The degre
+         * The knot arra
+         * Array of control point
+         * Array of weight value
+         * 
+         * returns*
+         * 
+         * A new NurbsCurv
+         */
+        static byKnotsControlPointsWeights(degree: number, knots: core.Data.KnotArray, controlPoints: Array<core.Data.Point>, weights?: Array<number>): NurbsCurve;
+
+        /**
+         * onstruct a NurbsCurve by interpolating a collection of points.  The resultant curv
+         * ill pass through all of the points
+         * 
+         * params*
+         * 
+         * An array of point
+         * Optional : The degree of resultant curv
+         * 
+         * returns*
+         * 
+         * A new NurbsCurv
+         */
+        static byPoints(points: Array<core.Data.Point>, degree?: number): NurbsCurve;
+
+        /**
+         * nderlying serializable, data objec
+         */
+        degree(): number;
+
+        /**
+         * he degree of the curv
+         */
+        knots(): core.Data.KnotArray;
+
+        /**
+         * he knot arra
+         */
+        controlPoints(): Array<core.Data.Point>;
+
+        /**
+         * rray of control point
+         */
+        weights(): Array<number>;
+
+        /**
+         * rray of weight value
+         * btain a copy of the underlying data structure for the Curve. Used with verb.core
+         * 
+         * returns*
+         * 
+         * A new NurbsCurveData objec
+         */
+        asNurbs(): core.Data.NurbsCurveData;
+
+        /**
+         * btain a copy of the curv
+         * 
+         * returns*
+         * 
+         * The copied curv
+         */
+        clone(): any;
+
+        /**
+         * etermine the valid domain of the curv
+         * 
+         * returns*
+         * 
+         * An array representing the high and end point of the domain of the curv
+         */
+        domain(): core.Data.Interval<number>;
+
+        /**
+         * ransform a curve with the given matrix
+         * 
+         * params*
+         * 
+         * 4d array representing the transfor
+         * 
+         * returns*
+         * 
+         * A point represented as an arra
+         */
+        transform(mat: core.Data.Matrix): NurbsCurve;
+
+        /**
+         * he async version of `transform
+         */
+        transformAsync(mat: core.Data.Matrix): Promise<NurbsCurve>;
+
+        /**
+         * ample a point at the given paramete
+         * 
+         * params*
+         * 
+         * The parameter to sample the curv
+         * 
+         * returns*
+         * 
+         * A point represented as an arra
+         */
+        point(u: number): core.Data.Point;
+
+        /**
+         * he async version of `point
+         */
+        pointAsync(u: number): Promise<core.Data.Point>;
+
+        /**
+         * btain the curve tangent at the given parameter.  This is the first derivative and i
+         * ot normalize
+         * 
+         * params*
+         * 
+         * The parameter to sample the curv
+         * 
+         * returns*
+         * 
+         * A point represented as an arra
+         */
+        tangent(u: number): core.Data.Vector;
+
+        /**
+         * he async version of `tangent
+         */
+        tangentAsync(u: number): Promise<core.Data.Vector>;
+
+        /**
+         * et derivatives at a given paramete
+         * 
+         * params*
+         * 
+         * The parameter to sample the curv
+         * The number of derivatives to obtai
+         * 
+         * returns*
+         * 
+         * A point represented as an arra
+         */
+        derivatives(u: number, numDerivs?: number): Array<core.Data.Vector>;
+
+        /**
+         * he async version of `derivatives
+         */
+        derivativesAsync(u: number, numDerivs?: number): Promise<Array<core.Data.Vector>>;
+
+        /**
+         * etermine the closest point on the curve to the given poin
+         * 
+         * params*
+         * 
+         * A length 3 array representing the poin
+         * 
+         * returns*
+         * 
+         * The closest poin
+         */
+        closestPoint(pt: core.Data.Point): core.Data.Point;
+
+        /**
+         * he async version of `closestPoint
+         */
+        closestPointAsync(pt: core.Data.Point): Promise<core.Data.Point>;
+
+        /**
+         * etermine the closest parameter on the curve to the given poin
+         * 
+         * params*
+         * 
+         * A length 3 array representing the poin
+         * 
+         * returns*
+         * 
+         * The closest paramete
+         */
+        closestParam(pt: core.Data.Point): number;
+
+        /**
+         * he async version of `length
+         */
+        closestParamAsync(pt: any): Promise<core.Data.Point>;
+
+        /**
+         * etermine the arc length of the curv
+         * 
+         * returns*
+         * 
+         * The length of the curv
+         */
+        length(): number;
+
+        /**
+         * he async version of `length
+         */
+        lengthAsync(): Promise<number>;
+
+        /**
+         * etermine the arc length of the curve at the given paramete
+         * 
+         * params*
+         * 
+         * The parameter at which to evaluat
+         * 
+         * returns*
+         * 
+         * The length of the curve at the given paramete
+         */
+        lengthAtParam(u: number): number;
+
+        /**
+         * he async version of `lengthAtParam
+         */
+        lengthAtParamAsync(): Promise<number>;
+
+        /**
+         * etermine the parameter of the curve at the given arc lengt
+         * 
+         * params*
+         * 
+         * The arc length at which to determine the paramete
+         * 
+         * returns*
+         * 
+         * The length of the curve at the given paramete
+         */
+        paramAtLength(len: number, tolerance?: number): number;
+
+        /**
+         * he async version of `paramAtLength
+         */
+        paramAtLengthAsync(len: number, tolerance?: number): Promise<number>;
+
+        /**
+         * etermine the parameters necessary to divide the curve into equal arc length segment
+         * 
+         * params*
+         * 
+         * Number of divisions of the curv
+         * 
+         * returns*
+         * 
+         * A collection of parameter
+         */
+        divideByEqualArcLength(divisions: number): Array<eval.CurveLengthSample>;
+
+        /**
+         * he async version of `divideByEqualArcLength`
+         */
+        divideByEqualArcLengthAsync(divisions: number): Promise<Array<eval.CurveLengthSample>>;
+
+        /**
+         * iven the distance to divide the curve, determine the parameters necessary to divide the curve into equal arc length segment
+         * 
+         * params*
+         * 
+         * Arc length of each segmen
+         * 
+         * returns*
+         * 
+         * A collection of parameter
+         */
+        divideByArcLength(arcLength: number): Array<eval.CurveLengthSample>;
+
+        /**
+         * he async version of `divideByArcLength
+         */
+        divideByArcLengthAsync(divisions: number): Promise<Array<eval.CurveLengthSample>>;
+
+        /**
+         * plit the curve at the given paramete
+         * 
+         * params*
+         * 
+         * The parameter at which to split the curv
+         * 
+         * returns*
+         * 
+         * Two curves - one at the lower end of the parameter range and one at the higher end
+         */
+        split(u: number): Array<NurbsCurve>;
+
+        /**
+         * The async version of `split
+         */
+        splitAsync(u: number): Promise<Array<NurbsCurve>>;
+
+        /**
+         * everse the parameterization of the curv
+         * 
+         * returns*
+         * 
+         * A reversed curv
+         */
+        reverse(): NurbsCurve;
+
+        /**
+         * The async version of `reverse
+         */
+        reverseAsync(): Promise<NurbsCurve>;
+
+        /**
+         * essellate a curve at a given toleranc
+         * 
+         * params*
+         * 
+         * The tolerance at which to sample the curv
+         * 
+         * returns*
+         * 
+         * A point represented as an arra
+         */
+        tessellate(tolerance?: number): Array<core.Data.Point>;
+
+        /**
+         * The async version of `tessellate
+         */
+        tessellateAsync(tolerance?: number): Promise<Array<core.Data.Point>>;
+
+    }
+
+    /**
+     * A curve representing a straight lin
+     */
+    class Line extends NurbsCurve
+    {
+
+        /**
+         * reate a lin
+         * 
+         * params*
+         * 
+         * Length 3 array representing the start poin
+         * Length 3 array representing the end poin
+         */
+        constructor(start: core.Data.Point, end: core.Data.Point);
+
+        start(): any;
+
+        /**
+         * ength 3 array representing the start poin
+         */
+        end(): any;
+
+    }
+}
+
+export declare module eval
+{
+    
+    class IBoundingBoxTree<T>
+    {
+        constructor();
+        boundingBox(): core.BoundingBox;
+        split(): core.Data.Pair<IBoundingBoxTree<T>, IBoundingBoxTree<T>>;
+        yield(): T;
+        indivisible(tolerance: number): boolean;
+        empty(): boolean;
+    }
     /**
          * `Intersect` provides various tools for all kinds of intersection. This includes but not limited to
          * 
@@ -364,6 +1050,330 @@ declare module eval
          */
     class Intersect
     {
+        //Intersect two NURBS surfaces, yielding a list of curves
+        //
+        //**params**
+        //
+        //* NurbsSurfaceData for the first surface
+        //* NurbsSurfaceData for the second
+        //
+        //**returns**
+        //
+        //* array of NurbsCurveData objects
+
+        static surfaces(surface0: core.Data.NurbsSurfaceData, surface1: core.Data.NurbsSurfaceData, tol: number): Array<core.Data.NurbsCurveData>;
+
+        //Refine a pair of surface points to a point where the two surfaces intersect
+        //
+        //**params**
+        //
+        //* NurbsSurfaceData for the first surface
+        //* NurbsSurfaceData for the second
+        //* the UV for the point on the first surface
+        //* the UV for the point on the second surface
+        //* a tolerance value to terminate the refinement procedure
+        //
+        //**returns**
+        //
+        //* a SurfaceSurfaceIntersectionPoint object
+
+        static surfacesAtPointWithEstimate(surface0: core.Data.NurbsSurfaceData,
+            surface1: core.Data.NurbsSurfaceData,
+            uv1: core.Data.UV,
+            uv2: core.Data.UV,
+            tol: number): core.Intersections. SurfaceSurfaceIntersectionPoint;
+
+
+        //Intersect two meshes, yielding a list of polylines
+        //
+        //**params**
+        //
+        //* MeshData for the first mesh
+        //* MeshData for the latter
+        //* optional boundingbox tree for first mesh
+        //* optional boundingbox tree for second mesh
+        //
+        //**returns**
+        //
+        //* array of array of MeshIntersectionPoints
+
+        static meshes(mesh0:core.Data.MeshData,
+            mesh1: core.Data.MeshData,
+            bbtree0: eval.IBoundingBoxTree<number> = null,
+            bbtree1: eval.IBoundingBoxTree<number> = null): Array<Array<MeshIntersectionPoint>>;
+
+
+        //Slice a mesh by repeated planar intersections yielding a sequence of polylines. Each plane
+        //is along the z axis, so you'll need to transform your mesh if you wish to cut in any other direction.
+        //
+        //**params**
+        //
+        //* MeshData for the mesh to be sliced
+        //* Minimum z value
+        //* Maximum z value
+        //* Step size
+        //
+        //**returns**
+        //
+        //* array of array of array of MeshIntersectionPoints - corresponding to the collection of polylines formed with
+        // each slice
+
+        
+        static meshSlices(mesh: core.Data. MeshData, min: number, max: number, step: number): Array<Array<Array<MeshIntersectionPoint>>>;
+
+
+        //Given a list of unstructured mesh intersection segments, reconstruct into polylines
+        //
+        //**params**
+        //
+        //* unstructured collection of segments
+        //
+        //**returns**
+        //
+        //* array of array of MeshIntersectionPoint
+
+        static makeMeshIntersectionPolylines(segments: Array<core.Data. Interval<MeshIntersectionPoint>>): Array<Array<MeshIntersectionPoint>>;
+
+
+        //Given a segment end
+        //
+        //**params**
+        //
+        //* unstructured collection of segments
+        //
+        //**returns**
+        //
+        //* array of array of MeshIntersectionPoint
+
+        static lookupAdjacentSegment(segEnd: MeshIntersectionPoint, tree: KdTree<MeshIntersectionPoint>, numResults: Int);
+
+
+        //Get the intersection of a NURBS curve and a NURBS surface without an estimate
+        //
+        //**params**
+        //
+        //* NurbsCurveData
+        //* NurbsSurfaceData
+        //* tolerance for the curve intersection
+        //
+        //**returns**
+        //
+        //* array of CurveSurfaceIntersection objects
+
+         static function curveAndSurface(curve : NurbsCurveData,
+            surface : NurbsSurfaceData,
+            tol : number = 1e-3,
+            crvBbTree : IBoundingBoxTree < NurbsCurveData > = null,
+            srfBbTree : IBoundingBoxTree < NurbsSurfaceData > = null) : Array<CurveSurfaceIntersection> ;
+        
+        
+        
+        //Refine an intersection pair for a surface and curve given an initial guess.  This is an unconstrained minimization,
+        //so the caller is responsible for providing a very good initial guess.
+        //
+        //**params**
+        //
+        //* NurbsCurveData
+        //* NurbsSurfaceData
+        //* array of initial parameter values [ u_crv, u_srf, v_srf ]
+        //
+        //**returns**
+        //
+        //* a CurveSurfaceIntersection object
+
+        static curveAndSurfaceWithEstimate(curve: NurbsCurveData,
+            surface: NurbsSurfaceData,
+            start_params: Array<number>,
+            tol: number = 1e-3): CurveSurfaceIntersection;
+
+
+
+        //Approximate the intersection of a polyline and mesh while maintaining parameter information
+        //
+        //**params**
+        //
+        //* PolylineData
+        //* MeshData
+        //
+        //**returns**
+        //
+        //* an array of PolylineMeshIntersection object
+
+        static polylineAndMesh(polyline: PolylineData,
+            mesh: MeshData,
+            tol: number): Array<PolylineMeshIntersection>;
+
+
+
+        //Approximate the intersection of two NURBS curves
+        //
+        //**params**
+        //
+        //* NurbsCurveData object representing the first NURBS curve
+        //* NurbsCurveData object representing the second NURBS curve
+        //* tolerance for the intersection
+        //
+        //**returns**
+        //
+        //* the intersections
+
+         static function curves(curve1 : NurbsCurveData, curve2 : NurbsCurveData, tolerance : number) : Array<CurveCurveIntersection> ;
+
+
+        //Refine an intersection pair for two curves given an initial guess.  This is an unconstrained minimization,
+        //so the caller is responsible for providing a very good initial guess.
+        //
+        //**params**
+        //
+        //* NurbsCurveData object representing the first NURBS curve
+        //* NurbsCurveData object representing the second NURBS curve
+        //* guess for first parameter
+        //* guess for second parameter
+        //* tolerance for the intersection
+        //
+        //**returns**
+        //
+        //* array of CurveCurveIntersection objects
+
+        private static function curvesWithEstimate(curve0 : NurbsCurveData,
+            curve1 : NurbsCurveData,
+            u0 : number,
+            u1 : number,
+            tolerance : number) : CurveCurveIntersection;
+
+        //Intersect two triangles
+        //
+        //**params**
+        //
+        //* array of length 3 arrays of numbers representing the points of mesh1
+        //* array of length 3 arrays of number representing the triangles of mesh1
+        //* array of length 3 arrays of numbers representing the points of mesh2
+        //* array of length 3 arrays of number representing the triangles of mesh2
+        //
+        //**returns**
+        //
+        //* a point represented by an array of length (dim)
+
+         static function triangles(mesh0 : MeshData, faceIndex0 : Int, mesh1 : MeshData, faceIndex1 : Int) : Interval<MeshIntersectionPoint>;
+
+         static function clipRayInCoplanarTriangle(ray : Ray, mesh : MeshData, faceIndex : Int) : Interval<CurveTriPoint> ;
+
+         static function mergeTriangleClipIntervals(clip1 : Interval < CurveTriPoint >, clip2 : Interval < CurveTriPoint >,
+            mesh1 : MeshData, faceIndex1 : Int, mesh2 : MeshData, faceIndex2 : Int) : Interval<MeshIntersectionPoint> ;
+                                                    
+
+        //Intersect two planes, yielding a Ray
+        //
+        //**params**
+        //
+        //* point in plane 0
+        //* normal to plane 0
+        //* point in plane 1
+        //* normal to plane 1
+        //
+        //**returns**
+        //
+        //* a point represented by an array of length (dim)
+
+         static function planes(origin0 : Point, normal0 : Vector, origin1 : Point, normal1: Vector) : Ray;
+
+
+        //Intersect three planes, expects the planes to form a single point of
+        //intersection
+        //
+        //**params**
+        //
+        //* normal for plane 0
+        //* d for plane 0 ( where the plane eq is normal * (x,y,z) = d )
+        //* normal for plane 1
+        //* d for plane 1 ( where the plane eq is normal * (x,y,z) = d )
+        //* normal for plane 2
+        //* d for plane 2 ( where the plane eq is normal * (x,y,z) = d )
+        //
+        //**returns**
+        //
+        //* the point representing the intersection
+
+         static function threePlanes(n0 : Point, d0 : number, n1 : Point, d1 : number, n2 : Point, d2 : number) : Point;
+
+        //Intersect two polyline curves, keeping track of parameterization on each
+        //
+        //**params**
+        //
+        //* PolylineData for first polyline
+        //* PolylineData for second polyline
+        //* tolerance for the intersection
+        //
+        //**returns**
+        //
+        //* array of parameter pairs representing the intersection of the two parameteric polylines
+
+         static function polylines(polyline0 : PolylineData, polyline1 : PolylineData, tol : number)
+        : Array<CurveCurveIntersection>
+
+
+        //Find the closest parameter on two rays, see http://geomalgorithms.com/a07-_distance.html
+        //
+        //**params**
+        //
+        //* first end of the first segment
+        //* second end of the first segment
+        //* first end of the second segment
+        //* second end of the second segment
+        //* tolerance for the intersection
+        //
+        //**returns**
+        //
+        //* a CurveCurveIntersection object
+
+         static function segments(a0 : Point, a1 : Point, b0 : Point, b1 : Point, tol : number) : CurveCurveIntersection
+
+        //Find the closest parameter on two rays, see http://geomalgorithms.com/a07-_distance.html
+        //
+        //**params**
+        //
+        //* origin for ray 1
+        //* direction of ray 1, assumed normalized
+        //* origin for ray 1
+        //* direction of ray 1, assumed normalized
+        //
+        //**returns**
+        //
+        //* a CurveCurveIntersection object
+
+         static function rays(a0 : Point, a : Point, b0 : Point, b : Point) : CurveCurveIntersection 
+
+        //  Intersect segment with triangle (from http://geomalgorithms.com/a06-_intersect-2.html)
+        //
+        //**params**
+        //
+        //* array of length 3 representing first point of the segment
+        //* array of length 3 representing second point of the segment
+        //* array of length 3 arrays representing the points of the triangle
+        //* array of length 3 containing int indices in the array of points, this allows passing a full mesh
+        //
+        //**returns**
+        //
+        //* a TriangleSegmentIntersection or null if failed
+
+         static function segmentWithTriangle(p0 : Point, p1 : Point, points : Array < Point >, tri : Tri) : TriSegmentIntersection 
+
+        //  Intersect ray/segment with plane (from http://geomalgorithms.com/a06-_intersect-2.html)
+        //
+        //  If intersecting a ray, the param needs to be between 0 and 1 and the caller is responsible
+        //  for making that check
+        //
+        //**params**
+        //
+        //* array of length 3 representing first point of the segment
+        //* array of length 3 representing second point of the segment
+        //* array of length 3 representing an origin point on the plane
+        //* array of length 3 representing the normal of the plane
+        //
+        //**returns**
+        //null or an object with a p property representing the param on the segment
+
+         static function segmentAndPlane(p0 : Point, p1 : Point, v0 : Point, n : Point) 
 
         /**
          * ntersect two NURBS surfaces, yielding a list of curve
@@ -379,5 +1389,106 @@ declare module eval
          */
         // static surfaces(surface0: NurbsSurfaceData, surface1: NurbsSurfaceData, tol: number): Array<NurbsCurveData>;
         static polylines(polyline0: core.PolylineData, polyline1: core.PolylineData, tol: number): Array<core.CurveCurveIntersection>;
+
     }
+
+/**
+* Divide provides various tools for dividing and splitting NURBS geometry
+*/
+class Divide
+{
+
+    /**
+     * plit a NURBS surface in two at a given paramete
+     * 
+     * params*
+     * 
+     * The surface to spli
+     * The parameter at which to split the surfac
+     * Whether to split in the U direction or V direction of the surfac
+     * 
+     * returns*
+     * 
+     * A length two array of new surface
+     */
+    static surfaceSplit(surface: core.Data.NurbsSurfaceData, u: number, useV?: boolean): Array<core.Data.NurbsSurfaceData>;
+
+    knots_to_insert: any;
+
+    newpts0: any;
+
+    s: any;
+
+    res: core.Data.NurbsCurveData;
+
+    knots0: any;
+
+    knots1: any;
+
+    /**
+     * di
+     * plit a NURBS curve into two parts at a given paramete
+     * 
+     * params*
+     * 
+     * NurbsCurveData object representing the curv
+     * location to split the curv
+     * 
+     * returns*
+     * 
+     * Array* two new curves, defined by degree, knots, and control point
+     */
+    static curveSplit(curve: core.Data.NurbsCurveData, u: number): Array<core.Data.NurbsCurveData>;
+
+    degree: any;
+
+    cpts0: any;
+
+    cpts1: any;
+
+    /**
+     * ivide a NURBS curve given a given number of times, including the end points. The result is not split curve
+     * ut a collection of `CurveLengthSample` objects that can be used for splitting. As with all arc length methods
+     * he result is an approximation
+     * 
+     * params*
+     * 
+     * NurbsCurveData object representing the curv
+     * The number of parts to split the curve int
+     * 
+     * returns*
+     * 
+     * An array of `CurveLengthSample` object
+     */
+    static rationalCurveByEqualArcLength(curve: core.Data.NurbsCurveData, num: number): Array<CurveLengthSample>;
+
+    tlen: any;
+
+    inc: any;
+
+    /**
+     * ivide a NURBS curve given a given number of times, including the end points
+     * 
+     * params*
+     * 
+     * NurbsCurveData object representing the curv
+     * The arc length separating the resultant sample
+     * 
+     * returns*
+     * 
+     * A sequence of `CurveLengthSample` object
+     */
+    static rationalCurveByArcLength(curve: core.Data.NurbsCurveData, l: number): Array<CurveLengthSample>;
+
+    crvs: any;
+
+}
+
+class CurveLengthSample
+{
+     u: number;//float
+     len: number;//float
+
+    constructor(u: number, len: number);
+}
 }

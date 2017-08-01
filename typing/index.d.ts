@@ -1,3 +1,6 @@
+//@auther : FishOrBear
+//@git : https://github.com/FishOrBear/verb
+
 export declare module core
 {
 
@@ -715,10 +718,6 @@ export declare module geom
 
     }
 
-
-
-
-
     /**
     * n interface representing a Curv
     */
@@ -778,8 +777,8 @@ export declare module geom
 
 
     /**
- * An interface representing a Surfac
- */
+    * An interface representing a Surfac
+    */
     export interface ISurface extends core.Serialization.ISerializable
     {
 
@@ -1227,8 +1226,8 @@ export declare module geom
     }
 
     /**
- * An Arc is a three dimensional curve representing a subset of a full Circl
- */
+    * An Arc is a three dimensional curve representing a subset of a full Circl
+    */
     export class Arc extends NurbsCurve
     {
 
@@ -1278,8 +1277,8 @@ export declare module geom
 
 
     /**
- * A Circle is a three dimensional curve representing the points that are equidistant from a point in a particular plan
- */
+    * A Circle is a three dimensional curve representing the points that are equidistant from a point in a particular plan
+    */
     export class Circle extends Arc
     {
 

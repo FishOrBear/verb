@@ -12,6 +12,8 @@
   },
   "engine": "node 7.0.0",
   "main": "build/js/verb.js",
+  "declaration": true,
+  "types": "typing/index.d.ts",
   "keywords": [
     "NURBS",
     "geometry",

@@ -2,17 +2,17 @@ export declare module core
 {
 
     /**
- * Haxe port of
- * 
- * -d Tree JavaScript - V 1.
- * 
- * ttps://github.com/ubilabs/kd-tree-javascrip
- * 
- * author Mircea Pricop <pricop@ubilabs.net>, 201
- * author Martin Kleppe <kleppe@ubilabs.net>, 201
- * author Ubilabs http://ubilabs.net, 201
- * license MIT License <http://www.opensource.org/licenses/mit-license.php
- */
+    * Haxe port of
+    * 
+    * -d Tree JavaScript - V 1.
+    * 
+    * ttps://github.com/ubilabs/kd-tree-javascrip
+    * 
+    * author Mircea Pricop <pricop@ubilabs.net>, 201
+    * author Martin Kleppe <kleppe@ubilabs.net>, 201
+    * author Ubilabs http://ubilabs.net, 201
+    * license MIT License <http://www.opensource.org/licenses/mit-license.php
+    */
     class KdTree<T> {
 
         constructor(points: any, distanceFunction: any);
@@ -80,11 +80,11 @@ export declare module core
 
 
     /**
- * `BoundingBox` is an n-dimensional bounding box implementation. It is used by many of verb's intersection algorithms
- * 
- * The first point added to the `BoundingBox` using `BoundingBox.add` will be used to define the dimensionality of th
- * bounding box
- */
+    * `BoundingBox` is an n-dimensional bounding box implementation. It is used by many of verb's intersection algorithms
+    * 
+    * The first point added to the `BoundingBox` using `BoundingBox.add` will be used to define the dimensionality of th
+    * bounding box
+    */
     class BoundingBox
     {
 
@@ -622,24 +622,6 @@ export declare module core
         static VERSION: string;
 
     }
-
-    //src/verb/core/Intersections.hx
-    class CurveCurveIntersection
-    {
-
-        //where the intersection took place
-        point0: Data.Point;
-
-        //where the intersection took place on the second curve
-        point1: Data.Point;
-
-        //the parameter on the first curve
-        u0: number;
-
-        //the parameter on the second curve
-        u1: number;
-        constructor(point0, point1, u0, u1);
-    }
     /**
      * A simple data structure representing a polyline. `PolylineData` is useful, for example, as the result of a curve tessellation
      */
@@ -664,6 +646,79 @@ export declare module core
 
 export declare module geom
 {
+    /**
+     * A class providing simplified access to verb's intersection tools. Intersect contains only static methods
+     * 
+     * Similar to `NurbsCurve` and `NurbsSurface`, `Intersect` provides asynchronous versions of all of its methods
+     */
+    export class Intersect
+    {
+
+        /**
+         * etermine the intersection of two curve
+         * 
+         * params*
+         * 
+         * ICurve objec
+         * ICurve objec
+         * tolerance for the intersectio
+         * 
+         * returns*
+         * 
+         * a possibly empty array of CurveCurveIntersection object
+         */
+        static curves(first: ICurve, second: ICurve, tol?: number): Array<core.Intersections.CurveCurveIntersection>;
+
+        /**
+         * The async version of `curves
+         */
+        static curvesAsync(first: ICurve, second: ICurve, tol?: number): Promise<Array<core.Intersections.CurveCurveIntersection>>;
+
+        /**
+         * etermine the intersection of a curve and a surfac
+         * 
+         * params*
+         * 
+         * ICurv
+         * ISurfac
+         * tolerance for the curve intersectio
+         * 
+         * returns*
+         * 
+         * array of CurveSurfaceIntersection object
+         */
+        static curveAndSurface(curve: ICurve, surface: ISurface, tol?: number): Array<core.Intersections.CurveSurfaceIntersection>;
+
+        /**
+         * The async version of `curveAndSurface
+         */
+        static curveAndSurfaceAsync(curve: ICurve, surface: ISurface, tol?: number): Promise<Array<core.Intersections.CurveSurfaceIntersection>>;
+
+        /**
+         * etermine the intersection of two surface
+         * 
+         * params*
+         * 
+         * ISurfac
+         * ISurfac
+         * 
+         * returns*
+         * 
+         * array of NurbsCurveData object
+         */
+        static surfaces(first: ISurface, second: ISurface, tol?: number): Array<NurbsCurve>;
+
+        /**
+         * The async version of `surfaces
+         */
+        static surfacesAsync(first: ISurface, second: ISurface, tol?: number): Promise<Array<NurbsCurve>>;
+
+    }
+
+
+
+
+
     /**
     * n interface representing a Curv
     */
@@ -720,6 +775,76 @@ export declare module geom
         derivatives(u: number, numDerivs?: number): Array<core.Data.Vector>;
 
     }
+
+
+    /**
+ * An interface representing a Surfac
+ */
+    export interface ISurface extends core.Serialization.ISerializable
+    {
+
+        /**
+         * rovide the NURBS representation of the curv
+         * 
+         * returns*
+         * 
+         * A NurbsCurveData object representing the curv
+         */
+        asNurbs(): core.Data.NurbsSurfaceData;
+
+        /**
+         * rovide the domain of the surface in the U directio
+         * 
+         * returns*
+         * 
+         * An interval object with min and max propertie
+         */
+        domainU(): core.Data.Interval<number>;
+
+        /**
+         * rovide the domain of the surface in the V directio
+         * 
+         * returns*
+         * 
+         * An interval object with min and max propertie
+         */
+        domainV(): core.Data.Interval<number>;
+
+        /**
+         * btain a point on the surface at the given paramete
+         * 
+         * params*
+         * 
+         * The u paramete
+         * The v paramete
+         * 
+         * returns*
+         * 
+         * A point on the surfac
+         */
+        point(u: number, v: number): core.Data.Point;
+
+        /**
+         * btain the derivatives of the NurbsSurface.  Returns a two dimensional arra
+         * ontaining the derivative vectors.  Increasing U partial derivatives are increasin
+         * ow-wise.  Increasing V partial derivatives are increasing column-wise.  Therefore
+         * he [0][0] position is a point on the surface, [n][0] is the nth V partial derivative
+         * he [1][1] position is twist vector or mixed partial derivative Puv
+         * 
+         * params*
+         * 
+         * The u paramete
+         * The v paramete
+         * Number of derivatives to evaluat
+         * 
+         * returns*
+         * 
+         * A two dimensional array of vector
+         */
+        derivatives(u: number, v: number, numDerivs?: number): Array<Array<core.Data.Vector>>;
+
+    }
+
 
 
     /**
@@ -1100,6 +1225,77 @@ export declare module geom
         end(): any;
 
     }
+
+    /**
+ * An Arc is a three dimensional curve representing a subset of a full Circl
+ */
+    export class Arc extends NurbsCurve
+    {
+
+        /**
+         * onstructor for Ar
+         * 
+         * params*
+         * 
+         * Length 3 array representing the center of the ar
+         * Length 3 array representing the xaxi
+         * Length 3 array representing the perpendicular yaxi
+         * Radius of the arc ar
+         * Start angle in radian
+         * End angle in radian
+         */
+        constructor(center: core.Data.Point, xaxis: core.Data.Vector, yaxis: core.Data.Vector, radius: number, minAngle: number, maxAngle: number);
+
+        center(): core.Data.Point;
+
+        /**
+         * ength 3 array representing the center of the ar
+         */
+        xaxis(): core.Data.Vector;
+
+        /**
+         * ength 3 array representing the xaxi
+         */
+        yaxis(): core.Data.Vector;
+
+        /**
+         * ength 3 array representing the perpendicular yaxi
+         */
+        radius(): number;
+
+        /**
+         * adius of the ar
+         */
+        minAngle(): number;
+
+        /**
+         * tart angle in radian
+         */
+        maxAngle(): number;
+
+    }
+
+
+
+    /**
+ * A Circle is a three dimensional curve representing the points that are equidistant from a point in a particular plan
+ */
+    export class Circle extends Arc
+    {
+
+        /**
+         * reate a circl
+         * 
+         * params*
+         * 
+         * Length 3 array representing the center of the circl
+         * Length 3 array representing the xaxi
+         * Length 3 array representing the perpendicular yaxi
+         * Radius of the circl
+         */
+        constructor(center: core.Data.Point, xaxis: core.Data.Vector, yaxis: core.Data.Vector, radius: number);
+
+    }
 }
 
 export declare module eval
@@ -1176,8 +1372,8 @@ export declare module eval
 
         static meshes(mesh0: core.Data.MeshData,
             mesh1: core.Data.MeshData,
-            bbtree0: eval.IBoundingBoxTree<number>/* = null*/,
-            bbtree1: eval.IBoundingBoxTree<number>/* = null*/): Array<Array<core.Intersections.MeshIntersectionPoint>>;
+            bbtree0?: eval.IBoundingBoxTree<number>/* = null*/,
+            bbtree1?: eval.IBoundingBoxTree<number>/* = null*/): Array<Array<core.Intersections.MeshIntersectionPoint>>;
 
 
         //Slice a mesh by repeated planar intersections yielding a sequence of polylines. Each plane
@@ -1292,7 +1488,7 @@ export declare module eval
         //
         //* the intersections
 
-        static curves(curve1: core.Data.NurbsCurveData, curve2: core.Data.NurbsCurveData, tolerance: number): Array<core.Intersections.CurveCurveIntersection>;
+        static curves(curve1: core.Data.NurbsCurveData, curve2: core.Data.NurbsCurveData, tolerance?: number): Array<core.Intersections.CurveCurveIntersection>;
 
 
         //Refine an intersection pair for two curves given an initial guess.  This is an unconstrained minimization,
@@ -1463,7 +1659,7 @@ export declare module eval
          * array of NurbsCurveData object
          */
         // static surfaces(surface0: NurbsSurfaceData, surface1: NurbsSurfaceData, tol: number): Array<NurbsCurveData>;
-        static polylines(polyline0: core.PolylineData, polyline1: core.PolylineData, tol: number): Array<core.CurveCurveIntersection>;
+        static polylines(polyline0: core.PolylineData, polyline1: core.PolylineData, tol: number): Array<core.Intersections.CurveCurveIntersection>;
 
     }
 

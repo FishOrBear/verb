@@ -33,7 +33,7 @@
 
 	// node.js context, but not WebWorker
 	if (isNode() && !isWebworker()) {
-		Worker = require('webworker-threads').Worker;
+		//Worker = require('webworker-threads').Worker;
 	}
 
 	// WebWorker or node.js context
